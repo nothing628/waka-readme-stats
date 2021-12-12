@@ -31,23 +31,37 @@ listReg = f"{START_COMMENT}[\\s\\S]+{END_COMMENT}"
 waka_key = os.getenv('INPUT_WAKATIME_API_KEY')
 ghtoken = os.getenv('INPUT_GH_TOKEN')
 showTimeZone = os.getenv('INPUT_SHOW_TIMEZONE')
+showTimeZone = '' if showTimeZone is None else showTimeZone
 showProjects = os.getenv('INPUT_SHOW_PROJECTS')
+showProjects = '' if showProjects is None else showProjects
 showEditors = os.getenv('INPUT_SHOW_EDITORS')
+showEditors = '' if showEditors is None else showEditors
 showOs = os.getenv('INPUT_SHOW_OS')
+showOs = '' if showOs is None else showOs
 showCommit = os.getenv('INPUT_SHOW_COMMIT')
+showCommit = '' if showCommit is None else showCommit
 showLanguage = os.getenv('INPUT_SHOW_LANGUAGE')
+showLanguage = '' if showLanguage is None else showLanguage
 show_loc = os.getenv('INPUT_SHOW_LINES_OF_CODE')
+show_loc = '' if show_loc is None else show_loc
 show_days_of_week = os.getenv('INPUT_SHOW_DAYS_OF_WEEK')
 showLanguagePerRepo = os.getenv('INPUT_SHOW_LANGUAGE_PER_REPO')
+showLanguagePerRepo = '' if showLanguagePerRepo is None else showLanguagePerRepo
 showLocChart = os.getenv('INPUT_SHOW_LOC_CHART')
+showLocChart = '' if showLocChart is None else showLocChart
 show_profile_view = os.getenv('INPUT_SHOW_PROFILE_VIEWS')
+show_profile_view = '' if show_profile_view is None else show_profile_view
 show_short_info = os.getenv('INPUT_SHOW_SHORT_INFO')
+show_short_info = '' if show_short_info is None else show_short_info
 locale = os.getenv('INPUT_LOCALE')
 commit_by_me = os.getenv('INPUT_COMMIT_BY_ME')
+commit_by_me = '' if commit_by_me is None else commit_by_me
 ignored_repos_name = str(os.getenv('INPUT_IGNORED_REPOS') or '').replace(' ', '').split(',')
 show_updated_date = os.getenv('INPUT_SHOW_UPDATED_DATE')
+show_updated_date = '' if show_updated_date is None else show_updated_date
 commit_message = os.getenv('INPUT_COMMIT_MESSAGE')
 show_total_code_time = os.getenv('INPUT_SHOW_TOTAL_CODE_TIME')
+show_total_code_time = '' if show_total_code_time is None else show_total_code_time
 show_waka_stats = 'y'
 # The GraphQL query to get commit data.
 userInfoQuery = """
@@ -464,8 +478,8 @@ def get_stats(github):
     repositoryList = run_query(repositoryListQuery.substitute(username=username, id=id))
 
     if (show_loc.lower() or showLocChart.lower()) in truthy:
-        # This condition is written to calculate the lines of code because it is heavy process soo needs to be calculate once this will reduce the execution time
-        yearly_data = get_yearly_data()
+            # This condition is written to calculate the lines of code because it is heavy process soo needs to be calculate once this will reduce the execution time
+            yearly_data = get_yearly_data()
 
     if show_total_code_time.lower() in truthy:
         request = requests.get(
